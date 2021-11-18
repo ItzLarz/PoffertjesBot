@@ -1,4 +1,5 @@
 const { QueryType } = require('discord-player');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
     name: 'play',
@@ -7,14 +8,30 @@ module.exports = {
     voiceChannel: true,
 
     async execute(client, message, args) {
-        if (!args[0]) return message.channel.send(`Please enter a valid search ${message.author}... try again ? ❌`);
+        const embed = new MessageEmbed();
+
+        embed.setAuthor(client.user.username, client.user.displayAvatarURL({ size: 1024, dynamic: true }));
+        embed.setTimestamp();
+        embed.setFooter('All my homies hate Pancakes', message.author.avatarURL({ dynamic: true }));
+
+
+
+        if (!args[0]) {
+            embed.setColor("RED");
+            embed.setDescription(`Please enter a valid search ${message.author}`);
+            return message.channel.send({ embeds: [embed] });
+        }
 
         const res = await player.search(args.join(' '), {
             requestedBy: message.member,
             searchEngine: QueryType.AUTO
         });
 
-        if (!res || !res.tracks.length) return message.channel.send(`No results found ${message.author}... try again ? ❌`);
+        if (!res || !res.tracks.length){
+            embed.setColor("RED");
+            embed.setDescription(`No results found ${message.author}`);
+            return message.channel.send({ embeds: [embed] });
+        } 
 
         const queue = await player.createQueue(message.guild, {
             metadata: message.channel
@@ -22,15 +39,22 @@ module.exports = {
 
         try {
             if (!queue.connection) await queue.connect(message.member.voice.channel);
-        } catch {
+        } 
+        
+        catch {
             await player.deleteQueue(message.guild.id);
-            return message.channel.send(`I can't join the voice channel ${message.author}... try again ? ❌`);
+            description = `I can't join the voice channel ${message.author}`;
+            embed.setColor("RED");
+            embed.setDescription(`I can't join the voice channel ${message.author}`);
+            return message.channel.send({ embeds: [embed] });
         }
-
-        await message.channel.send(`Loading your ${res.playlist ? 'playlist' : 'track'}... 🎧`);
 
         res.playlist ? queue.addTracks(res.tracks) : queue.addTrack(res.tracks[0]);
 
         if (!queue.playing) await queue.play();
+
+        embed.setColor("GREEN");
+        embed.setDescription(`Loading your ${res.playlist ? 'playlist' : 'track'}`);
+        return message.channel.send({ embeds: [embed] });
     },
 };
