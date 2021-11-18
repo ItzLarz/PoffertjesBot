@@ -1,10 +1,10 @@
 {
-  "name": "poffertjes-bot",
+  "name": "poffertjesbot",
   "main": "main.js",
   "author": "ItzLarz",
   "version": "1.0.0",
-  "repository": "https://github.com/ZerioDev/Music-bot.git",
-  "description": "Discord bot named Poffertjes",
+  "repository": "https://github.com/ItzLarz/PoffertjesBot.git",
+  "description": "Discord bot",
   "scripts": {
     "start": "node main.js"
   },
