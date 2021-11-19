@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 player.on('error', (queue, error) => {
     console.log(`Error emitted from the queue ${error.message}`);
 });
@@ -13,6 +15,17 @@ player.on('trackStart', (queue, track) => {
 
 player.on('trackAdd', (queue, track) => {
     queue.metadata.send(`Track ${track.title} added in the queue`);
+    // const embed = new MessageEmbed();
+
+    // embed.setColor('GREEN');
+    // // embed.setAuthor(client.user.username, client.user.displayAvatarURL({ size: 1024, dynamic: true }));
+
+    // embed.setDescription(`Track ${track.title} added in the queue`);
+
+    // embed.setTimestamp();
+    // // embed.setFooter('All my homies hate Pancakes', message.author.avatarURL({ dynamic: true }));
+
+    // queue.metadata.send({ embeds: [embed] });
 });
 
 player.on('botDisconnect', (queue) => {
