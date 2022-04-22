@@ -1,7 +1,8 @@
+const fs = require("fs");
 module.exports = {
     app: {
         px: '/',
-        token: 'NzkyNDU2MjUwMjA1OTI5NTQz.X-d-ZQ.tmhUOR8HaKu_BmKZJd-f8Qei4rM',
+        token: fs.readFileSync("./token.txt", "utf8"),
         playing: 'All my homies hate Pancakes'
     },
 
