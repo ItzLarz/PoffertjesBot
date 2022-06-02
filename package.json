@@ -16,7 +16,7 @@
     "ffmpeg-static": "^4.4.0",
     "fs": "^0.0.1-security",
     "ms": "^3.0.0-canary.1",
-    "npm": "^8.7.0",
+    "npm": "^8.11.0",
     "opusscript": "^0.0.8",
     "ytdl-core": "^4.11.0"
   }
